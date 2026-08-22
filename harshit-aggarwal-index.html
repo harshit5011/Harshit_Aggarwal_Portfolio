@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Harshit Aggarwal — Financial models, CIMs &amp; deal research for PE and IB teams</title>
+<meta name="description" content="Freelance financial analyst supporting private equity, investment banking and corporate development teams with DCF and M&A models, CIMs, pitchbooks, earnings summaries and target research.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Serif:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0D1820;
+    --ink-2:#122430;
+    --ink-3:#18303E;
+    --bone:#E9E4D8;
+    --bone-2:#F4F1E9;
+    --brass:#A87C33;
+    --brass-lt:#D8B571;
+    --slate:#8CA6B6;
+    --on-ink:#DCE5EA;
+    --on-ink-mute:#8FA5B2;
+    --on-bone:#132430;
+    --on-bone-mute:#4F6875;
+    --rule-ink:rgba(140,166,182,.22);
+    --rule-bone:rgba(19,36,48,.16);
+    --sans:'Archivo',system-ui,-apple-system,Segoe UI,sans-serif;
+    --serif:'IBM Plex Serif',Georgia,serif;
+    --mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,monospace;
+    --wrap:1120px;
+    --ease:cubic-bezier(.22,.61,.36,1);
+  }
+
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;background:var(--ink);color:var(--on-ink);
+    font-family:var(--sans);font-size:17px;line-height:1.6;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  }
+  img{max-width:100%}
+  a{color:inherit}
+
+  .wrap{width:100%;max-width:var(--wrap);margin:0 auto;padding:0 28px}
+
+  .eyebrow{
+    font-family:var(--mono);font-size:11.5px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--brass-lt);margin:0 0 22px;
+  }
+  .band-bone .eyebrow{color:var(--brass)}
+
+  h1,h2,h3{font-family:var(--sans);font-weight:800;letter-spacing:-.025em;line-height:1.06;margin:0}
+  h1{font-size:clamp(2.4rem,5.4vw,4.15rem)}
+  h2{font-size:clamp(1.85rem,3.6vw,2.7rem)}
+
+  .lede{font-size:clamp(1.02rem,1.5vw,1.18rem);color:var(--on-ink-mute);max-width:58ch;line-height:1.62}
+  .band-bone .lede{color:var(--on-bone-mute)}
+
+  /* ---------- scroll progress ---------- */
+  .progress{
+    position:fixed;top:0;left:0;height:2px;width:100%;z-index:80;
+    background:linear-gradient(90deg,var(--brass),var(--brass-lt));
+    transform:scaleX(0);transform-origin:0 50%;
+  }
+
+  /* ---------- bands ---------- */
+  .band{padding:104px 0}
+  .band-bone{background:var(--bone);color:var(--on-bone)}
+  .band-ink{background:var(--ink)}
+  .band-ink-2{background:var(--ink-2)}
+
+  /* ---------- nav ---------- */
+  .nav{
+    position:sticky;top:0;z-index:50;background:rgba(13,24,32,.72);
+    backdrop-filter:blur(10px);border-bottom:1px solid transparent;
+    transition:background .4s var(--ease),border-color .4s var(--ease);
+  }
+  .nav.scrolled{background:rgba(13,24,32,.94);border-bottom-color:var(--rule-ink)}
+  .nav-in{display:flex;align-items:center;justify-content:space-between;height:76px;transition:height .4s var(--ease)}
+  .nav.scrolled .nav-in{height:62px}
+  .brand{font-weight:800;letter-spacing:-.02em;font-size:16px}
+  .brand span{color:var(--brass-lt);font-family:var(--mono);font-weight:400;font-size:11px;letter-spacing:.16em;display:block;margin-top:1px}
+  .nav-links{display:flex;align-items:center;gap:30px;font-size:14px}
+  .nav-links a{text-decoration:none;color:var(--on-ink-mute);transition:color .25s var(--ease);position:relative}
+  .nav-links a:not(.btn-sm)::after{
+    content:"";position:absolute;left:0;bottom:-5px;height:1px;width:100%;
+    background:var(--brass-lt);transform:scaleX(0);transform-origin:100% 50%;
+    transition:transform .35s var(--ease);
+  }
+  .nav-links a:not(.btn-sm):hover::after{transform:scaleX(1);transform-origin:0 50%}
+  .nav-links a:hover{color:var(--on-ink)}
+  .nav-links .btn-sm{
+    background:var(--brass);color:#0D1820;padding:9px 17px;border-radius:2px;
+    font-weight:600;font-size:13.5px;transition:background .25s var(--ease),transform .25s var(--ease);
+  }
+  .nav-links .btn-sm:hover{background:var(--brass-lt);color:#0D1820;transform:translateY(-2px)}
+  @media(max-width:760px){.nav-links a:not(.btn-sm){display:none}}
+
+  /* ---------- hero ---------- */
+  .hero{padding:92px 0 84px;position:relative;overflow:hidden}
+  .hero-glow{
+    position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(760px 420px at 76% 20%,rgba(168,124,51,.16),transparent 62%);
+    animation:drift 16s ease-in-out infinite alternate;
+  }
+  @keyframes drift{
+    0%{transform:translate3d(0,0,0) scale(1);opacity:.85}
+    100%{transform:translate3d(-40px,26px,0) scale(1.09);opacity:1}
+  }
+  .hero-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:64px;align-items:center;position:relative;z-index:1}
+  .hero h1{max-width:14ch}
+  .hero .lede{margin:26px 0 0}
+  .cta-row{display:flex;flex-wrap:wrap;gap:14px;margin-top:38px}
+  .btn{
+    display:inline-block;text-decoration:none;font-weight:600;font-size:15px;
+    padding:14px 26px;border-radius:2px;position:relative;overflow:hidden;
+    transition:transform .3s var(--ease),background .3s var(--ease),border-color .3s var(--ease),box-shadow .3s var(--ease);
+  }
+  .btn-primary{background:var(--brass);color:#0D1820}
+  .btn-primary::before{
+    content:"";position:absolute;inset:0;transform:translateX(-101%);
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,.45),transparent);
+    transition:transform .7s var(--ease);
+  }
+  .btn-primary:hover::before{transform:translateX(101%)}
+  .btn-primary:hover{background:var(--brass-lt);transform:translateY(-3px);box-shadow:0 14px 26px -14px rgba(216,181,113,.7)}
+  .btn-ghost{border:1px solid var(--rule-ink);color:var(--on-ink)}
+  .btn-ghost:hover{border-color:var(--slate);transform:translateY(-3px)}
+
+  .facts{
+    margin-top:52px;padding-top:26px;border-top:1px solid var(--rule-ink);
+    display:flex;flex-wrap:wrap;gap:14px 40px;font-family:var(--mono);
+    font-size:12px;letter-spacing:.05em;color:var(--on-ink-mute);
+  }
+  .facts b{color:var(--on-ink);font-weight:500;font-variant-numeric:tabular-nums}
+
+  /* hero load sequence */
+  .ld{opacity:0;transform:translateY(22px);animation:ldin .9s var(--ease) forwards}
+  @keyframes ldin{to{opacity:1;transform:none}}
+  .ld-1{animation-delay:.08s}
+  .ld-2{animation-delay:.20s}
+  .ld-3{animation-delay:.32s}
+  .ld-4{animation-delay:.44s}
+  .ld-5{animation-delay:.56s}
+  .ld-stone{opacity:0;transform:translateY(34px) rotate(-4deg) scale(.96);animation:stonein 1.15s var(--ease) .3s forwards}
+  @keyframes stonein{to{opacity:1;transform:translateY(0) rotate(-1.1deg) scale(1)}}
+
+  /* ---------- tombstone (signature) ---------- */
+  .stone{
+    background:linear-gradient(158deg,#F5F2EA 0%,#E6E1D4 52%,#D7D1C1 100%);
+    border-radius:2px;color:#25353F;text-align:center;position:relative;overflow:hidden;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.95),
+      inset 0 0 0 1px rgba(19,36,48,.10),
+      0 22px 40px -22px rgba(0,0,0,.85);
+    padding:38px 30px;
+  }
+  .stone::after{
+    content:"";position:absolute;top:0;left:-60%;width:45%;height:100%;
+    background:linear-gradient(100deg,transparent,rgba(255,255,255,.75),transparent);
+    transform:skewX(-18deg);opacity:0;pointer-events:none;
+  }
+  .stone-hero{padding:52px 40px;transform-style:preserve-3d;will-change:transform}
+  .stone-hero::after{animation:sheen 6.5s ease-in-out 1.4s infinite}
+  @keyframes sheen{
+    0%{left:-60%;opacity:0}
+    8%{opacity:.9}
+    26%{left:120%;opacity:0}
+    100%{left:120%;opacity:0}
+  }
+  .stone .s-name{
+    font-family:var(--serif);font-weight:600;font-size:clamp(1.25rem,2.2vw,1.6rem);
+    letter-spacing:.06em;text-transform:uppercase;line-height:1.2;
+    text-shadow:0 1px 0 rgba(255,255,255,.8);
+  }
+  .stone .s-role{
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;
+    color:#7A6335;margin-top:12px;
+  }
+  .stone .s-verb{
+    font-family:var(--serif);font-style:italic;font-size:14.5px;color:#4A5C67;margin:22px 0 14px;
+  }
+  .stone .s-deal{
+    font-family:var(--serif);font-weight:600;font-size:clamp(1.05rem,1.7vw,1.3rem);
+    line-height:1.32;letter-spacing:.01em;text-shadow:0 1px 0 rgba(255,255,255,.7);
+  }
+  .stone .s-sub{font-size:13.5px;color:#54666F;margin-top:10px;line-height:1.5}
+  .stone-rule{height:1px;background:rgba(19,36,48,.2);margin:24px auto;width:62px;transform:scaleX(0);transform-origin:50% 50%;transition:transform .8s var(--ease) .25s}
+  .in .stone-rule,.stone-hero .stone-rule{transform:scaleX(1)}
+  .stone .s-foot{
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
+    color:#6C7C84;margin-top:22px;
+  }
+
+  /* ---------- ticker ---------- */
+  .ticker{
+    background:var(--ink-2);border-top:1px solid var(--rule-ink);border-bottom:1px solid var(--rule-ink);
+    overflow:hidden;padding:15px 0;
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent);
+    mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent);
+  }
+  .ticker-track{display:flex;width:max-content;animation:slide 38s linear infinite}
+  .ticker:hover .ticker-track{animation-play-state:paused}
+  @keyframes slide{to{transform:translateX(-50%)}}
+  .ticker-seq{display:flex;align-items:center;flex:none}
+  .ticker-seq span{
+    font-family:var(--mono);font-size:12px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--on-ink-mute);padding:0 26px;white-space:nowrap;
+  }
+  .ticker-seq span::after{content:"·";color:var(--brass);margin-left:26px}
+
+  /* ---------- services ---------- */
+  .head-row{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:end;margin-bottom:60px}
+  .svc-list{border-top:1px solid var(--rule-bone)}
+  .svc{
+    display:grid;grid-template-columns:auto 1fr 300px;gap:36px;align-items:start;
+    padding:34px 0;border-bottom:1px solid var(--rule-bone);position:relative;
+    transition:padding-left .45s var(--ease);
+  }
+  .svc::before{
+    content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--brass);
+    transform:scaleY(0);transform-origin:50% 0;transition:transform .45s var(--ease);
+  }
+  .svc:hover::before{transform:scaleY(1)}
+  .svc:hover{padding-left:22px}
+  .svc-tag{
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--brass);width:112px;padding-top:7px;transition:letter-spacing .45s var(--ease);
+  }
+  .svc:hover .svc-tag{letter-spacing:.26em}
+  .svc h3{font-size:1.32rem;letter-spacing:-.015em}
+  .svc p{margin:10px 0 0;color:var(--on-bone-mute);font-size:15.5px;max-width:52ch}
+  .svc-out{
+    background:rgba(19,36,48,.045);border-left:2px solid var(--brass);
+    padding:14px 18px;border-radius:0 2px 2px 0;transition:background .35s var(--ease),transform .35s var(--ease);
+  }
+  .svc:hover .svc-out{background:rgba(19,36,48,.08);transform:translateY(-3px)}
+  .svc-out span{
+    display:block;font-family:var(--mono);font-size:10px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--on-bone-mute);margin-bottom:6px;
+  }
+  .svc-out p{margin:0;font-size:14.5px;color:var(--on-bone)}
+  @media(max-width:940px){
+    .svc{grid-template-columns:1fr;gap:16px}
+    .svc-tag{width:auto;padding-top:0}
+  }
+
+  /* ---------- track record ---------- */
+  .stone-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-top:56px}
+  .stone-sm{padding:30px 22px;transition:transform .4s var(--ease),box-shadow .4s var(--ease)}
+  .stone-sm:hover{
+    transform:translateY(-8px) rotate(-.6deg);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.95),inset 0 0 0 1px rgba(19,36,48,.10),0 34px 50px -24px rgba(0,0,0,.95);
+  }
+  .stone-sm:hover::after{animation:sheen 1.6s ease-out}
+  .stone-sm .s-deal{font-size:1.02rem}
+  .stone-sm .s-sub{font-size:12.5px}
+  .stone-sm .s-foot{font-size:9.5px;margin-top:18px}
+  .stone-sm .stone-rule{margin:18px auto;width:44px}
+  @media(max-width:1000px){.stone-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){.stone-grid{grid-template-columns:1fr}}
+
+  .note{
+    margin-top:44px;font-family:var(--mono);font-size:12px;letter-spacing:.04em;
+    color:var(--on-ink-mute);border-top:1px solid var(--rule-ink);padding-top:20px;
+  }
+
+  /* ---------- process ---------- */
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:54px}
+  .step{padding:0 30px;position:relative}
+  .step::before{
+    content:"";position:absolute;left:0;top:0;bottom:0;width:1px;background:var(--rule-bone);
+    transform:scaleY(0);transform-origin:50% 0;transition:transform .8s var(--ease);
+  }
+  .step.in::before{transform:scaleY(1)}
+  .step:first-child{padding-left:0}
+  .step:first-child::before{display:none}
+  .step-n{font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--brass);margin-bottom:14px}
+  .step h3{font-size:1.08rem;letter-spacing:-.01em}
+  .step p{margin:9px 0 0;font-size:14.5px;color:var(--on-bone-mute)}
+  @media(max-width:860px){
+    .steps{grid-template-columns:1fr;gap:26px}
+    .step{padding:0 0 0 22px}
+    .step:first-child{padding-left:22px}
+    .step:first-child::before{display:block}
+  }
+
+  /* ---------- toolkit ---------- */
+  .tool-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:60px;align-items:start}
+  .chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:26px}
+  .chip{
+    font-family:var(--mono);font-size:12px;letter-spacing:.05em;padding:9px 14px;
+    border:1px solid var(--rule-ink);border-radius:2px;color:var(--on-ink);
+    transition:transform .3s var(--ease),border-color .3s var(--ease),background .3s var(--ease);
+  }
+  .chip:hover{transform:translateY(-3px);border-color:var(--brass);background:rgba(168,124,51,.12)}
+  .cred{border-top:1px solid var(--rule-ink);padding-top:18px}
+  .cred + .cred{margin-top:22px}
+  .cred .c-t{font-weight:600;font-size:15.5px}
+  .cred .c-s{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--on-ink-mute);margin-top:6px}
+  @media(max-width:860px){.tool-grid{grid-template-columns:1fr;gap:44px}}
+
+  /* ---------- contact ---------- */
+  .contact{text-align:center;padding:112px 0 96px;position:relative;overflow:hidden}
+  .contact-glow{
+    position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(620px 320px at 50% 8%,rgba(168,124,51,.15),transparent 65%);
+    animation:pulseglow 9s ease-in-out infinite alternate;
+  }
+  @keyframes pulseglow{0%{opacity:.55;transform:scale(1)}100%{opacity:1;transform:scale(1.12)}}
+  .contact .wrap{position:relative;z-index:1}
+  .contact h2{max-width:18ch;margin:0 auto}
+  .contact .lede{margin:24px auto 0;text-align:center}
+  .contact-lines{
+    display:flex;flex-wrap:wrap;justify-content:center;gap:12px 34px;margin-top:44px;
+    font-family:var(--mono);font-size:13.5px;letter-spacing:.03em;
+  }
+  .contact-lines a{
+    color:var(--brass-lt);text-decoration:none;padding-bottom:3px;position:relative;
+    transition:color .3s var(--ease);
+  }
+  .contact-lines a::after{
+    content:"";position:absolute;left:0;bottom:0;height:1px;width:100%;
+    background:currentColor;transform:scaleX(.35);transform-origin:0 50%;
+    transition:transform .4s var(--ease);
+  }
+  .contact-lines a:hover{color:#fff}
+  .contact-lines a:hover::after{transform:scaleX(1)}
+  footer{
+    border-top:1px solid var(--rule-ink);padding:26px 0;
+    font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--on-ink-mute);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  }
+
+  /* ---------- reveal ---------- */
+  .rv{opacity:0;transform:translateY(26px);transition:opacity .85s var(--ease),transform .85s var(--ease)}
+  .rv.in{opacity:1;transform:none}
+  .rv-stone{opacity:0;transform:translateY(30px) scale(.965);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+  .rv-stone.in{opacity:1;transform:none}
+
+  @media(max-width:900px){
+    .hero-grid{grid-template-columns:1fr;gap:52px}
+    .head-row{grid-template-columns:1fr;gap:22px}
+    .band{padding:78px 0}
+    .hero{padding:60px 0 70px}
+  }
+  @media(prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    .rv,.rv-stone{opacity:1;transform:none;transition:none}
+    .ld,.ld-stone{opacity:1;transform:none;animation:none}
+    .ld-stone{transform:rotate(-1.1deg)}
+    .stone-rule{transform:scaleX(1);transition:none}
+    .step::before{transform:scaleY(1);transition:none}
+    .ticker-track{animation:none}
+    .hero-glow,.contact-glow,.stone::after{animation:none}
+    .progress{display:none}
+    *{transition-duration:.01ms !important}
+  }
+  a:focus-visible,button:focus-visible{outline:2px solid var(--brass-lt);outline-offset:3px}
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+
+<nav class="nav" id="nav">
+  <div class="wrap nav-in">
+    <div class="brand">Harshit Aggarwal<span>FINANCIAL ANALYST</span></div>
+    <div class="nav-links">
+      <a href="#services">Services</a>
+      <a href="#work">Track record</a>
+      <a href="#process">How it works</a>
+      <a class="btn-sm" href="mailto:aggharshit802@gmail.com?subject=Project%20enquiry">Start a project</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-glow"></div>
+  <div class="wrap hero-grid">
+    <div>
+      <p class="eyebrow ld ld-1">Independent analyst support · Delhi, India · Working with PE, IB &amp; corporate development teams</p>
+      <h1 class="ld ld-2">The modelling and deck work behind your next deal.</h1>
+      <p class="lede ld ld-3">I build the DCFs, M&amp;A models, CIMs, pitchbooks and company research that deal teams need on a date certain — checked against source documents, delivered audit-ready, with none of the ramp-up time of a new hire.</p>
+      <div class="cta-row ld ld-4">
+        <a class="btn btn-primary" href="mailto:aggharshit802@gmail.com?subject=Project%20enquiry">Start a project</a>
+        <a class="btn btn-ghost" href="#work">See the track record</a>
+      </div>
+      <div class="facts ld ld-5">
+        <div><b data-count="10" data-suffix="+">10+</b> valuation models built</div>
+        <div><b data-count="5" data-suffix="+">5+</b> CIMs, teasers &amp; pitchbooks</div>
+        <div><b>4–5</b> sectors covered</div>
+        <div><b data-count="100" data-suffix="%">100%</b> on-time delivery</div>
+      </div>
+    </div>
+
+    <div>
+      <div class="stone stone-hero ld-stone" id="heroStone">
+        <div class="s-name">Harshit Aggarwal</div>
+        <div class="s-role">Financial Analyst · Private Equity &amp; Investment Banking</div>
+        <div class="s-verb">has supported deal teams on</div>
+        <div class="s-deal">10+ DCF, 3-Statement &amp;<br>M&amp;A Valuation Models</div>
+        <div class="s-sub">Sub-$10M target companies · Investment screening and internal deal evaluation</div>
+        <div class="stone-rule"></div>
+        <div class="s-foot">Modelling · Valuation · FP&amp;A · Research</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <div class="ticker-seq">
+      <span>DCF models</span><span>Three-statement builds</span><span>M&amp;A cases</span><span>Trading comparables</span><span>CIMs</span><span>Teasers</span><span>Pitchbooks</span><span>Quarterly earnings summaries</span><span>Target screening</span><span>Investor longlists</span><span>Financial due diligence</span><span>FP&amp;A dashboards</span>
+    </div>
+    <div class="ticker-seq">
+      <span>DCF models</span><span>Three-statement builds</span><span>M&amp;A cases</span><span>Trading comparables</span><span>CIMs</span><span>Teasers</span><span>Pitchbooks</span><span>Quarterly earnings summaries</span><span>Target screening</span><span>Investor longlists</span><span>Financial due diligence</span><span>FP&amp;A dashboards</span>
+    </div>
+  </div>
+</div>
+
+<section class="band band-bone" id="services">
+  <div class="wrap">
+    <div class="head-row rv">
+      <div>
+        <p class="eyebrow">What I take off your plate</p>
+        <h2>Five things I do, and the file you get back.</h2>
+      </div>
+      <p class="lede">Engagements run project by project or as ongoing support through a live process. You brief me once; I come back with a scoped one-pager before any work starts.</p>
+    </div>
+
+    <div class="svc-list">
+      <div class="svc rv">
+        <div class="svc-tag">Modelling</div>
+        <div>
+          <h3>Financial models &amp; valuation</h3>
+          <p>DCF, three-statement operating models, M&amp;A and merger cases, trading comparables and precedent transaction benchmarking. Built for lower-middle-market and sub-$10M targets, structured so anyone on your team can pick the file up.</p>
+        </div>
+        <div class="svc-out">
+          <span>You receive</span>
+          <p>Fully linked Excel model, assumptions sheet, sensitivity tables and a one-page output summary.</p>
+        </div>
+      </div>
+
+      <div class="svc rv">
+        <div class="svc-tag">Deal materials</div>
+        <div>
+          <h3>CIMs, teasers &amp; pitchbooks</h3>
+          <p>Sell-side and buy-side materials written from your data room, financials and management inputs — company overview, market positioning, financial summary and investment highlights, formatted in your house template.</p>
+        </div>
+        <div class="svc-out">
+          <span>You receive</span>
+          <p>Editable PowerPoint deck with a source log for every figure on the page.</p>
+        </div>
+      </div>
+
+      <div class="svc rv">
+        <div class="svc-tag">Research</div>
+        <div>
+          <h3>Background &amp; company research</h3>
+          <p>Company profiles, sector maps, competitive landscapes, quarterly earnings summaries and target screening across the sectors you cover. Useful before a first meeting, and useful again at IC.</p>
+        </div>
+        <div class="svc-out">
+          <span>You receive</span>
+          <p>Research memo or profile pack, plus the underlying data in a workbook.</p>
+        </div>
+      </div>
+
+      <div class="svc rv">
+        <div class="svc-tag">Origination</div>
+        <div>
+          <h3>Lead generation &amp; investor sourcing</h3>
+          <p>Longlists of targets, buyers or LPs built to your mandate, with a fit rationale against each name rather than a scraped contact dump. Previously delivered for a PE client across energy and technology.</p>
+        </div>
+        <div class="svc-out">
+          <span>You receive</span>
+          <p>Filterable tracker with contact details, fit notes and screening criteria applied.</p>
+        </div>
+      </div>
+
+      <div class="svc rv">
+        <div class="svc-tag">FP&amp;A</div>
+        <div>
+          <h3>Portfolio FP&amp;A &amp; data work</h3>
+          <p>Store, service and category performance analysis, revenue and gross margin trending, reconciliations, and messy multi-source data turned into something that refreshes on its own. Experience across Advanced Excel, Power Query and OneStream ERP.</p>
+        </div>
+        <div class="svc-out">
+          <span>You receive</span>
+          <p>Refreshable workbook or Power BI view, with reconciliation and control checks documented.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band band-ink" id="work">
+  <div class="wrap">
+    <div class="head-row rv">
+      <div>
+        <p class="eyebrow">Track record</p>
+        <h2>Work already delivered for client deal teams.</h2>
+      </div>
+      <p class="lede">Everything below was delivered for private equity and investment banking clients across live screening, diligence and marketing processes.</p>
+    </div>
+
+    <div class="stone-grid">
+      <div class="stone stone-sm rv-stone">
+        <div class="s-deal">10+ Valuation Models</div>
+        <div class="s-sub">DCF, three-statement and M&amp;A models for sub-$10M targets, supporting client investment screening and deal evaluation.</div>
+        <div class="stone-rule"></div>
+        <div class="s-foot">Modelling</div>
+      </div>
+
+      <div class="stone stone-sm rv-stone">
+        <div class="s-deal">Reusable M&amp;A Model Template</div>
+        <div class="s-sub">Built with integrated three-statement projections. Adopted by a team of five analysts across 6–10 deal evaluations, cutting roughly two days from each build.</div>
+        <div class="stone-rule"></div>
+        <div class="s-foot">Process design</div>
+      </div>
+
+      <div class="stone stone-sm rv-stone">
+        <div class="s-deal">5+ CIMs, Teasers &amp; Pitchbooks</div>
+        <div class="s-sub">Owned end to end across 4–5 sectors, contributing to a 20% reduction in deck revision cycles.</div>
+        <div class="stone-rule"></div>
+        <div class="s-foot">Deal materials</div>
+      </div>
+
+      <div class="stone stone-sm rv-stone">
+        <div class="s-deal">10+ Quarterly Earnings Summaries</div>
+        <div class="s-sub">Independently delivered client-facing summary reports on a recurring reporting cycle.</div>
+        <div class="stone-rule"></div>
+        <div class="s-foot">Research</div>
+      </div>
+
+      <div class="stone stone-sm rv-stone">
+        <div class="s-deal">Financial Due Diligence &amp; Control Checks</div>
+        <div class="s-sub">Run across management accounts, transaction records and filings to produce audit-ready outputs before client submission.</div>
+        <div class="stone-rule"></div>
+        <div class="s-foot">Diligence</div>
+      </div>
+
+      <div class="stone stone-sm rv-stone">
+        <div class="s-deal">FP&amp;A Performance Analysis</div>
+        <div class="s-sub">Store, service and category models in Power Query and pivot tables, tracking revenue, gross margin, invoice volume and profitability by location.</div>
+        <div class="stone-rule"></div>
+        <div class="s-foot">FP&amp;A</div>
+      </div>
+
+      <div class="stone stone-sm rv-stone">
+        <div class="s-deal">Investor Lead Generation</div>
+        <div class="s-sub">Supported investor sourcing for a private equity client across the energy and technology sectors.</div>
+        <div class="stone-rule"></div>
+        <div class="s-foot">Origination</div>
+      </div>
+
+      <div class="stone stone-sm rv-stone">
+        <div class="s-deal">ERP Data Management</div>
+        <div class="s-sub">Structured financial databases in OneStream with data backfills, reconciliation reports and full audit trails across multi-source datasets — zero reported discrepancies.</div>
+        <div class="stone-rule"></div>
+        <div class="s-foot">Systems</div>
+      </div>
+    </div>
+
+    <p class="note rv">Client names and deal specifics stay confidential. Anonymised samples of a model, a CIM and a research memo are available on request.</p>
+  </div>
+</section>
+
+<section class="band band-bone" id="process">
+  <div class="wrap">
+    <div class="head-row rv">
+      <div>
+        <p class="eyebrow">How it works</p>
+        <h2>Scoped before it starts. Checked before it reaches you.</h2>
+      </div>
+      <p class="lede">Deal timelines don't wait for revisions, so the review happens on my side. The sequence below is the same on every engagement.</p>
+    </div>
+
+    <div class="steps">
+      <div class="step rv">
+        <div class="step-n">01</div>
+        <h3>Brief</h3>
+        <p>A short call or written brief covering the target, the audience for the output and the date you need it.</p>
+      </div>
+      <div class="step rv">
+        <div class="step-n">02</div>
+        <h3>Scope</h3>
+        <p>I send back a one-pager with the exact deliverable, assumptions I'll need from you, timeline and fee. Work starts once you confirm.</p>
+      </div>
+      <div class="step rv">
+        <div class="step-n">03</div>
+        <h3>Build &amp; check</h3>
+        <p>First draft built, then tied out against source documents with control checks run before anything is shared.</p>
+      </div>
+      <div class="step rv">
+        <div class="step-n">04</div>
+        <h3>Hand over</h3>
+        <p>Working files, source log and a walkthrough of the logic. One revision round is included as standard.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band band-ink-2">
+  <div class="wrap tool-grid">
+    <div class="rv">
+      <p class="eyebrow">Toolkit</p>
+      <h2>Built in the tools your team already uses.</h2>
+      <div class="chips">
+        <span class="chip">Advanced Excel</span>
+        <span class="chip">VBA</span>
+        <span class="chip">Power Query</span>
+        <span class="chip">Pivot models</span>
+        <span class="chip">PowerPoint</span>
+        <span class="chip">Power BI</span>
+        <span class="chip">OneStream ERP</span>
+        <span class="chip">QuickBooks</span>
+        <span class="chip">AI research tools</span>
+      </div>
+    </div>
+    <div class="rv">
+      <div class="cred">
+        <div class="c-t">Financial Analyst — PE &amp; IB advisory</div>
+        <div class="c-s">Mar 2025 – Present · Client-side deal delivery</div>
+      </div>
+      <div class="cred">
+        <div class="c-t">MBA, Financial Analysis — 83.10%</div>
+        <div class="c-s">USMS, GGSIP University · New Delhi</div>
+      </div>
+      <div class="cred">
+        <div class="c-t">BBA — 81.40%</div>
+        <div class="c-s">RDIAS, GGSIP University · New Delhi</div>
+      </div>
+      <div class="cred">
+        <div class="c-t">Recognised as top performer</div>
+        <div class="c-s">Five concurrent client engagements · 100% on-time record</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band-ink contact" id="contact">
+  <div class="contact-glow"></div>
+  <div class="wrap">
+    <p class="eyebrow rv">Get in touch</p>
+    <h2 class="rv">Tell me what's on your plate this quarter.</h2>
+    <p class="lede rv">Send over the mandate or the deck you're stuck on. I'll come back within a day with what I'd do, how long it takes and what it costs — no obligation to go ahead.</p>
+    <div class="contact-lines rv">
+      <a href="mailto:aggharshit802@gmail.com?subject=Project%20enquiry">aggharshit802@gmail.com</a>
+      <a href="tel:+919870129672">+91 98701 29672</a>
+      <a href="https://www.linkedin.com/in/harsh-aggarwal-0364732a2" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+    <div class="cta-row rv" style="justify-content:center">
+      <a class="btn btn-primary" href="mailto:aggharshit802@gmail.com?subject=Project%20enquiry">Email me the brief</a>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <footer>
+    <div>Harshit Aggarwal · New Delhi, India</div>
+    <div>Available across IST, UK and US East hours</div>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* --- scroll progress --- */
+  var bar = document.getElementById('progress');
+  var nav = document.getElementById('nav');
+  var ticking = false;
+  function onScroll(){
+    if (!ticking){
+      window.requestAnimationFrame(function(){
+        var h = document.documentElement.scrollHeight - window.innerHeight;
+        var p = h > 0 ? window.scrollY / h : 0;
+        if (bar && !reduce) bar.style.transform = 'scaleX(' + p + ')';
+        if (nav) nav.classList.toggle('scrolled', window.scrollY > 30);
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  /* --- scroll reveals --- */
+  var items = document.querySelectorAll('.rv, .rv-stone, .step');
+  if (reduce || !('IntersectionObserver' in window)){
+    items.forEach(function(el){ el.classList.add('in'); });
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+
+    document.querySelectorAll('.stone-grid, .svc-list, .steps, .chips').forEach(function(group){
+      Array.prototype.forEach.call(group.children, function(child, i){
+        child.style.transitionDelay = (i * 80) + 'ms';
+      });
+    });
+    items.forEach(function(el){ io.observe(el); });
+  }
+
+  /* --- number count-up --- */
+  var counters = document.querySelectorAll('[data-count]');
+  function runCount(el){
+    var target = parseInt(el.getAttribute('data-count'), 10);
+    var suffix = el.getAttribute('data-suffix') || '';
+    var dur = 1300, start = null;
+    function tick(ts){
+      if (!start) start = ts;
+      var p = Math.min((ts - start) / dur, 1);
+      var eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(target * eased) + suffix;
+      if (p < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+  if (!reduce){
+    counters.forEach(function(el){ el.textContent = '0' + (el.getAttribute('data-suffix') || ''); });
+    setTimeout(function(){ counters.forEach(runCount); }, 700);
+  }
+
+  /* --- hero tombstone tilt --- */
+  var stone = document.getElementById('heroStone');
+  if (stone && !reduce && window.matchMedia('(hover: hover)').matches){
+    var raf = null;
+    stone.parentElement.addEventListener('mousemove', function(e){
+      var r = stone.getBoundingClientRect();
+      var x = (e.clientX - r.left) / r.width - 0.5;
+      var y = (e.clientY - r.top) / r.height - 0.5;
+      if (raf) cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(function(){
+        stone.style.transition = 'transform .18s ease-out';
+        stone.style.transform = 'perspective(900px) rotateY(' + (x * 7).toFixed(2) + 'deg) rotateX(' + (-y * 6).toFixed(2) + 'deg) rotate(-1.1deg) translateY(-4px)';
+      });
+    });
+    stone.parentElement.addEventListener('mouseleave', function(){
+      stone.style.transition = 'transform .7s cubic-bezier(.22,.61,.36,1)';
+      stone.style.transform = 'rotate(-1.1deg)';
+    });
+  }
+})();
+</script>
+</body>
+</html>
